@@ -22,7 +22,8 @@ jobs:
           $env:SCOOP = "$env:RUNNER_TEMP/scoop"
           & "$env:RUNNER_TEMP/install-scoop.ps1" -RunAsAdmin -ScoopDir $env:SCOOP
           $env:PATH = "$env:SCOOP\shims;$env:PATH"
-          scoop bucket add sylphx $env:GITHUB_WORKSPACE
+          $bucketUri = ([System.Uri]::new("$env:GITHUB_WORKSPACE/")).AbsoluteUri
+          scoop bucket add sylphx $bucketUri
           if ($LASTEXITCODE -ne 0) { throw 'Could not add the checked-out bucket' }
           foreach ($file in Get-ChildItem bucket/*.json) {
             $name = $file.BaseName
