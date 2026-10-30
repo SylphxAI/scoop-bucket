@@ -1,0 +1,23 @@
+{
+    "version": "1.9.0",
+    "description": "Map and search code repositories",
+    "homepage": "https://github.com/SylphxAI/repomap",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/SylphxAI/repomap/releases/download/v1.9.0/repomap-win32-x64-msvc.zip",
+            "hash": "9b0ca9e6d05d70bfc4689a622bef9618b7e2790d31f105103c276937e1b12aa8"
+        }
+    },
+    "bin": "repomap.exe",
+    "checkver": {
+        "github": "https://github.com/SylphxAI/repomap"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/SylphxAI/repomap/releases/download/v$version/repomap-win32-x64-msvc.zip"
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "version": "0.7.1",
+    "description": "Resolve documentation for pinned dependencies",
+    "homepage": "https://github.com/SylphxAI/lockdocs",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/SylphxAI/lockdocs/releases/download/v0.7.1/lockdocs-win32-x64-msvc.zip",
+            "hash": "015f5a1a525b86836f26ec56c5b1ee96f7869d2e6e514a13130f18e91ed02afb"
+        }
+    },
+    "bin": "lockdocs.exe",
+    "checkver": {
+        "github": "https://github.com/SylphxAI/lockdocs"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/SylphxAI/lockdocs/releases/download/v$version/lockdocs-win32-x64-msvc.zip"
+            }
+        }
+    }
+}

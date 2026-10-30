@@ -1,0 +1,42 @@
+name: CI
+on:
+  pull_request:
+  merge_group:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+jobs:
+  windows:
+    if: github.event.repository.private == false
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+      - name: Install through Scoop and verify versions
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Invoke-WebRequest https://get.scoop.sh -OutFile "$env:RUNNER_TEMP/install-scoop.ps1"
+          $env:SCOOP = "$env:RUNNER_TEMP/scoop"
+          & "$env:RUNNER_TEMP/install-scoop.ps1" -RunAsAdmin -ScoopDir $env:SCOOP
+          $env:PATH = "$env:SCOOP\shims;$env:PATH"
+          scoop bucket add sylphx $env:GITHUB_WORKSPACE
+          if ($LASTEXITCODE -ne 0) { throw 'Could not add the checked-out bucket' }
+          foreach ($file in Get-ChildItem bucket/*.json) {
+            $name = $file.BaseName
+            $manifest = Get-Content $file.FullName -Raw | ConvertFrom-Json
+            scoop install "sylphx/$name"
+            if ($LASTEXITCODE -ne 0) { throw "Scoop install failed: $name" }
+            $actual = & $name version
+            if ($LASTEXITCODE -ne 0 -or "$actual" -ne "$name $($manifest.version)") {
+              throw "Version mismatch: $actual"
+            }
+          }
+  ci-ok:
+    if: always()
+    needs: windows
+    runs-on: ubuntu-latest
+    steps:
+      - run: test '${{ needs.windows.result }}' = success
