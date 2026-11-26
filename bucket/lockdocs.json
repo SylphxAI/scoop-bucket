@@ -1,12 +1,12 @@
 {
-    "version": "0.7.11",
+    "version": "0.7.12",
     "description": "Exact-version library docs from your lockfile — local, offline, no rate limits.",
     "homepage": "https://lockdocs.sylphx.com",
     "license": "MIT",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/SylphxAI/lockdocs/releases/download/v0.7.11/lockdocs-win32-x64-msvc.zip",
-            "hash": "3ec1e941e999ba15e7f5bb7287905d7c9f8c0ad830b951a53fdfa97ca3d2b2e4"
+            "url": "https://github.com/SylphxAI/lockdocs/releases/download/v0.7.12/lockdocs-win32-x64-msvc.zip",
+            "hash": "423d21cdea8473d859115adc4d5ddc647f0355b59e7890fa1caa316be8fdb005"
         }
     },
     "bin": "lockdocs.exe",
